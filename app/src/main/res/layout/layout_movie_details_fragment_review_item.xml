@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="id.indocyber.common.entity.movie.review.Result" />
+
+        <import type="id.indocyber.common.base.Constant" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="4dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:elevation="20dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/reviewerAvatarPlaceHolder"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="8dp"
+                custom:loadImageCircled="@{`https://pbs.twimg.com/profile_images/1243623122089041920/gVZIvphd_400x400.jpg`}"  />
+
+            <ImageView
+                android:id="@+id/reviewerAvatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="8dp"
+                custom:loadImageCircled="@{data.authorDetails.avatarPath.startsWith(`/http`) ? data.authorDetails.avatarPath.substring(1) : Constant.IMAGE_PREFIX+data.authorDetails.avatarPath}"  />
+
+            <TextView
+                android:id="@+id/reviewerName"
+                app:layout_constraintStart_toStartOf="@id/reviewerAvatar"
+                app:layout_constraintTop_toBottomOf="@id/reviewerAvatar"
+                app:layout_constraintEnd_toEndOf="@id/reviewerAvatar"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                tools:text="Test"
+                android:text="@{data.authorDetails.username}" />
+
+            <TextView
+                android:layout_width="0dp"
+                app:layout_constraintStart_toEndOf="@id/reviewerAvatar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@{data.content}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

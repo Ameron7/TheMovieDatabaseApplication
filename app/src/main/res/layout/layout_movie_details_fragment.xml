@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="id.indocyber.themoviedatabaseapplication.view_model.MovieDetailsViewModel" />
+        <import type="kotlin.collections.ArraysKt"
+            alias="a"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:layout_width="match_parent"
+            android:id="@+id/videoTrailer"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:enableAutomaticInitialization="false"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/noVideo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="No Video"
+            android:background="@color/gray"
+            android:visibility="gone"
+            android:layout_height="200dp"/>
+
+
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{vm.movieDetailResponseState.data.title}"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/videoTrailer" />
+
+        <TextView
+            android:id="@+id/overviewText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{vm.movieDetailResponseState.data.overview}"
+            app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+        <TextView
+            android:id="@+id/genreText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{String.format(`Genre\t\t\t\t\t\t: %s`, vm.genreListToNames(vm.movieDetailResponseState.data.genres))}"
+            app:layout_constraintTop_toBottomOf="@id/overviewText" />
+
+        <TextView
+            android:id="@+id/releaseDateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{String.format(`Release Date\t: %s`, vm.movieDetailResponseState.data.releaseDate)}"
+            app:layout_constraintTop_toBottomOf="@id/genreText" />
+
+        <TextView
+            android:id="@+id/voteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{String.format(`Rating\t\t\t\t\t\t: %.2f (%d Total Votes)`, vm.movieDetailResponseState.data.voteAverage, vm.movieDetailResponseState.data.voteCount)}"
+            app:layout_constraintTop_toBottomOf="@id/releaseDateText" />
+
+        <TextView
+            android:id="@+id/reviewText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Review"
+            app:layout_constraintTop_toBottomOf="@id/voteText" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movieReviewRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reviewText" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/noReview"
+            app:layout_constraintTop_toBottomOf="@+id/reviewText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="No Review"
+            android:visibility="gone"
+            android:background="@color/gray"
+            android:layout_height="0dp"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/progressBar"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/retryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retry"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
