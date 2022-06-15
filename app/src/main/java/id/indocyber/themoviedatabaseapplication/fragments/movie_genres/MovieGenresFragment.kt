@@ -44,13 +44,11 @@ class MovieGenresFragment : BaseFragment<LayoutGenresFragmentBinding, MovieGenre
                 binding.btnConfirm.visibility = View.VISIBLE
             },
             error = {
-                Log.i("AppResonse", "error")
                 binding.retryButton.visibility = View.VISIBLE
                 binding.btnConfirm.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
             },
             loading = {
-                Log.i("AppResonse", "loading")
                 binding.retryButton.visibility = View.GONE
                 binding.btnConfirm.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE

@@ -8,13 +8,8 @@ import id.indocyber.common.lang_ext.SingleLiveEvent
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
     val navigationtEvent = SingleLiveEvent<NavDirections>()
-    val popBackStackEvent = SingleLiveEvent<Any>()
 
     fun navigate(nav: NavDirections) {
         navigationtEvent.postValue(nav)
-    }
-
-    fun popBackStack(){
-        popBackStackEvent.postValue(Any())
     }
 }

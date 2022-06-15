@@ -1,6 +1,7 @@
 package id.indocyber.common.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +24,6 @@ abstract class BaseFragment<Binding : ViewDataBinding, VM : BaseViewModel> : Fra
         super.onCreate(savedInstanceState)
         vm.navigationtEvent.observe(this) {
             findNavController().navigate(it)
-        }
-        vm.popBackStackEvent.observe(this) {
-            findNavController().popBackStack()
         }
     }
 
@@ -61,6 +59,8 @@ abstract class BaseFragment<Binding : ViewDataBinding, VM : BaseViewModel> : Fra
                 is ResponseError -> {
                     it.error?.let {
                         error?.invoke(it)
+                    } ?: kotlin.run {
+                        error?.invoke(Exception(it.data.toString()))
                     }
                 }
                 is ResponseLoading -> {

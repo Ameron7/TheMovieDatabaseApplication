@@ -32,31 +32,35 @@ class MovieDetailsFragment :
             when (it.refresh) {
                 is LoadState.Error -> {
                     movieReviewRecycler.visibility = View.GONE
-                    videoTrailer.visibility = View.GONE
+                    binding.noVideo.visibility = View.GONE
                     genreText.visibility = View.GONE
+                    genreList.visibility = View.GONE
                     releaseDateText.visibility = View.GONE
                     voteText.visibility = View.GONE
                     retryButton.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
+                    reviewText.visibility = View.GONE
                 }
 
                 is LoadState.Loading -> {
                     movieReviewRecycler.visibility = View.GONE
                     retryButton.visibility = View.GONE
-                    videoTrailer.visibility = View.GONE
                     genreText.visibility = View.GONE
+                    genreList.visibility = View.GONE
                     releaseDateText.visibility = View.GONE
                     voteText.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
+                    reviewText.visibility = View.GONE
                 }
 
                 is LoadState.NotLoading -> {
-                    videoTrailer.visibility = View.VISIBLE
                     genreText.visibility = View.VISIBLE
+                    genreList.visibility = View.VISIBLE
                     releaseDateText.visibility = View.VISIBLE
                     voteText.visibility = View.VISIBLE
                     retryButton.visibility = View.GONE
                     progressBar.visibility = View.GONE
+                    reviewText.visibility = View.VISIBLE
                     if (reviewPagingAdapter.itemCount == 0) {
                         movieReviewRecycler.visibility = View.GONE
                         noReview.visibility = View.VISIBLE
@@ -95,7 +99,6 @@ class MovieDetailsFragment :
                         super.onReady(youTubePlayer)
                         val videoId = it?.key.orEmpty()
                         youTubePlayer.cueVideo(videoId, 0f)
-
                         val defaultPlayerUiController =
                             DefaultPlayerUiController(binding.videoTrailer, youTubePlayer)
                         binding.videoTrailer.setCustomPlayerUi(defaultPlayerUiController.rootView)
@@ -103,9 +106,14 @@ class MovieDetailsFragment :
                 }
                 val option = IFramePlayerOptions.Builder().controls(0).build()
                 binding.videoTrailer.initialize(listener, option)
+                binding.videoTrailer.visibility = View.VISIBLE
+                binding.noVideo.visibility = View.GONE
             }, error = {
-                binding.videoTrailer.visibility = View.GONE
+                binding.videoTrailer.visibility = View.INVISIBLE
                 binding.noVideo.visibility = View.VISIBLE
+            }, loading = {
+                binding.videoTrailer.visibility = View.INVISIBLE
+                binding.noVideo.visibility = View.GONE
             }
         )
         vm.getData(args.movieId)
